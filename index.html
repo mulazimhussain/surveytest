@@ -12,6 +12,22 @@
             margin: 20px;
         }
 
+        body {
+            background-color: #d70;
+        }
+
+        @media (prefers-color-scheme: light) {
+            body {
+                background-color: #0f0;
+            }
+        }
+
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: red;
+            }
+        }
+
         h1,
         h2 {
             padding: 10px;
@@ -23,11 +39,6 @@
         }
 
         @media (prefers-color-scheme: dark) {
-            body {
-                background-color: #222;
-                color: #fff;
-            }
-
             h2#dark-heading {
                 color: red;
             }
