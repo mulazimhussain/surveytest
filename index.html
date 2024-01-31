@@ -5,6 +5,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dark Mode Heading Test</title>
+
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+        }
+
+        h1,
+        h2 {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #222;
+                color: #fff;
+            }
+
+            h2#dark-heading {
+                color: #ffc107;
+            }
+        }
+    </style>
 </head>
 
 <body>
