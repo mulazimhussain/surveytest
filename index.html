@@ -3,34 +3,11 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="color-scheme" content="light dark">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dark Mode Heading Test</title>
 
-    <script>
-        //determines if the user has a set theme
-        function detectColorScheme() {
-            var theme = "light";    //default to light
 
-            //local storage is used to override OS theme settings
-            if (localStorage.getItem("theme")) {
-                if (localStorage.getItem("theme") == "dark") {
-                    var theme = "dark";
-                }
-            } else if (!window.matchMedia) {
-                //matchMedia method not supported
-                return false;
-            } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-                //OS theme setting detected as dark
-                var theme = "dark";
-            }
-
-            //dark theme preferred, set document with a `data-theme` attribute
-            if (theme == "dark") {
-                document.documentElement.setAttribute("data-theme", "dark");
-            }
-        }
-        detectColorScheme();
-    </script>
 
     <style>
         :root {
@@ -79,5 +56,57 @@
     <h2 id="dark-heading">Dark Mode Heading (Change Me!)</h2>
     <p>This is some example text to demonstrate how the heading color changes in different modes.</p>
 </body>
+<script>
+    /**
+* Adopt:
+* the theme from the system preferences; or
+* the previously stored mode from the `localStorage`
+*/
+    var initialMode = "light";
+    var prefersColorSchemeDark = window.matchMedia("(prefers-color-scheme: dark)");
+
+    if (prefersColorSchemeDark.matches) {
+        initialMode = "dark";
+    }
+
+    if (localStorage.getItem("initialMode") == null) {
+        localStorage.setItem("initialMode", initialMode);
+    }
+
+    if (localStorage.getItem("currentMode") == null) {
+        localStorage.setItem("currentMode", initialMode);
+    } else {
+        let currentMode = localStorage.getItem("currentMode");
+        if (currentMode == "dark" && currentMode != initialMode) {
+            document.body.classList.add("dark-mode");
+        } else if (currentMode == "light" && currentMode != initialMode) {
+            document.body.classList.add("light-mode");
+        }
+    }
+
+    /**
+     * Process the toggle then store to `localStorage`
+     */
+    document.getElementById('toggle').addEventListener("click", function () {
+        var initialMode = localStorage.getItem("initialMode");
+        let currentMode = localStorage.getItem("currentMode");
+
+        if (currentMode == "dark" && currentMode == initialMode) {
+            document.body.classList.add("light-mode");
+            localStorage.setItem("currentMode", "light");
+        } else if (currentMode == "light" && currentMode == initialMode) {
+            document.body.classList.add("dark-mode");
+            localStorage.setItem("currentMode", "dark");
+        } else if (currentMode != initialMode) {
+            document.body.removeAttribute("class");
+            if (currentMode == "dark") {
+                localStorage.setItem("currentMode", "light");
+            } else {
+                localStorage.setItem("currentMode", "dark");
+            }
+        }
+    },
+        false);
+</script>
 
 </html>
